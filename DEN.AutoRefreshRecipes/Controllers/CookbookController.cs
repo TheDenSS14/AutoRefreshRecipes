@@ -29,7 +29,8 @@ public class CookbookController : ControllerBase
                 out var failure))
             return failure;
         
-        return await _cookbookManager.RefreshAsync(username, password);
+        await _cookbookManager.RefreshAsync(username, password);
+        return Ok();
     }
 
     [NonAction]
