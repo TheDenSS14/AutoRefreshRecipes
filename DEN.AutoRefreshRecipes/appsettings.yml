@@ -1,0 +1,5 @@
+Cookbook:
+  UpdateType: ShellScript
+  AuthToken: tokenhere
+  UpdatePath: ~/ss14-cookbook/update.sh
+urls: "http://localhost:50085"
