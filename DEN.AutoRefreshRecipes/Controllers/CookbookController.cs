@@ -25,21 +25,23 @@ public class CookbookController : ControllerBase
     public async Task<IActionResult> RefreshCookbook([FromHeader(Name = "Authorization")] string authorization)
     {
         if (!TryAuthorize(authorization,
-                out var token,
+                out var username, out var password,
                 out var failure))
             return failure;
         
-        return await _cookbookManager.RefreshAsync(token);
+        return await _cookbookManager.RefreshAsync(username, password);
     }
 
     [NonAction]
     public bool TryAuthorize(string authorization,
-        [NotNullWhen(true)] out string? token,
+        [NotNullWhen(true)] out string? username,
+        [NotNullWhen(true)] out string? password,
         [NotNullWhen(false)] out IActionResult? failure)
     {
         if (!AuthorizationUtility.TryParseBasicAuthentication(authorization,
                 out failure,
-                out token))
+                out username,
+                out password))
             return false;
         
         return true;

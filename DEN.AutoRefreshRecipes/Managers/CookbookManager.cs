@@ -21,12 +21,12 @@ public class CookbookManager
         _options = options;
     }
 
-    public async Task<IActionResult> RefreshAsync(string token)
+    public async Task<IActionResult> RefreshAsync(string username, string password)
     {
         // TODO: support other run methods with current.UpdateType
         var current = _options.CurrentValue;
         
-        if (current.AuthToken != token)
+        if (current.AuthUser != username || current.AuthToken != password)
             return new UnauthorizedResult();
         
         ProcessStartInfo startInfo = new()

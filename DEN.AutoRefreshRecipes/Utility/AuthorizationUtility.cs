@@ -10,9 +10,11 @@ public class AuthorizationUtility
     // and https://github.com/space-wizards/SS14.Watchdog/blob/60bab56ce0e6cfc6ad5a0e6874b80d5d2058e33a/SS14.Watchdog/Utility/Base64Util.cs
     public static bool TryParseBasicAuthentication(string authorization,
         [NotNullWhen(false)] out IActionResult? failure,
-        [NotNullWhen(true)] out string? token)
+        [NotNullWhen(true)] out string? username,
+        [NotNullWhen(true)] out string? password)
     {
-        token = null;
+        username = null;
+        password = null;
 
         if (!authorization.StartsWith("Basic "))
         {
@@ -20,7 +22,11 @@ public class AuthorizationUtility
             return false;
         }
 
-        token = Utf8Base64ToString(authorization[6..]);
+        var split = Utf8Base64ToString(authorization[6..]).Split(':');
+
+        username = split[0];
+        password = split[1];
+        
         failure = null;
         return true;
     }
