@@ -21,7 +21,7 @@ public class CookbookManager
         _options = options;
     }
 
-    public async Task<IActionResult> IsAuthorized(string username, string password)
+    public IActionResult IsAuthorized(string username, string password)
     {
         var options = _options.CurrentValue;
         

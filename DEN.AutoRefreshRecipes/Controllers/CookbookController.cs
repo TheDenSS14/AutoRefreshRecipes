@@ -29,7 +29,7 @@ public class CookbookController : ControllerBase
                 out var failure))
             return failure;
         
-        var hasAuth = await _cookbookManager.IsAuthorized(username, password);
+        var hasAuth = _cookbookManager.IsAuthorized(username, password);
 
         if (hasAuth.GetType() != typeof(OkResult))
             return hasAuth;
