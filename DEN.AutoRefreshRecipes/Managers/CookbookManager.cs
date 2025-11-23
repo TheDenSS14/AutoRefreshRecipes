@@ -21,18 +21,28 @@ public class CookbookManager
         _options = options;
     }
 
+    public async Task<IActionResult> IsAuthorized(string username, string password)
+    {
+        var options = _options.CurrentValue;
+        
+        if (options.AuthUser != username || options.AuthToken != password)
+            return new UnauthorizedResult();
+
+        return new OkResult();
+    }
+
     public async Task<IActionResult> RefreshAsync(string username, string password)
     {
-        // TODO: support other run methods with current.UpdateType
-        var current = _options.CurrentValue;
+        // TODO: support other run methods with options.UpdateType
+        var options = _options.CurrentValue;
         
-        if (current.AuthUser != username || current.AuthToken != password)
+        if (options.AuthUser != username || options.AuthToken != password)
             return new UnauthorizedResult();
         
         ProcessStartInfo startInfo = new()
         {
             FileName = "/bin/sh",
-            Arguments = current.UpdatePath,
+            Arguments = options.UpdatePath,
             CreateNoWindow = true
         };
 
